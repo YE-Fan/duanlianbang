@@ -1,0 +1,12 @@
+#=========Spring boot application=========
+spring:
+  application:
+    name: duanlianbang
+
+# controller的端口
+server:
+  port: 7575
+  ssl:
+    key-store: classpath:3485464_duanlianbang.mihile.top.pfx
+    key-store-password: U6lD0Oj0
+    key-store-type: PKCS12
