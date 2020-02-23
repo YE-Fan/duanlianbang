@@ -1,22 +1,24 @@
 import * as React from 'react'
-import { createStore, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
-import logger  from "redux-logger"
-import reducer from './reducers'
+import dva, { connect } from 'remax-dva';
+import models from '@/models/models.js'
 import './app.css'
 
-const store = createStore(reducer,applyMiddleware(thunk,logger))
+const app = dva();
+
+models.forEach(model => {
+    app.model(model);
+});
+
+
 
 class App extends React.Component {
     render(){
         return(
-            <Provider store={store}>
-                {this.props.children}
-            </Provider>     
+                this.props.children
         )         
     }
 }
 
+const AppWithDva = app.start(({ children }) => children);
 
-export default App;
+export default AppWithDva;

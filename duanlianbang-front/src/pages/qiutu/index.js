@@ -2,8 +2,10 @@ import React from 'react'
 import { View, 
          Text, 
 } from 'remax/wechat'
-import {connect} from 'react-redux'
-import {namespace,requestPost} from './models/qiutu'
+import {connect} from 'remax-dva'
+import qiutu from './models/qiutu'
+
+const namespace = qiutu.namespace;
 
 const mapStateToProps = state =>{
     return {
@@ -12,8 +14,8 @@ const mapStateToProps = state =>{
 }
 const mapDispatchToProps = dispatch =>{
     return {
-        test: ()=> dispatch({type: `${namespace}TEST`}),
-        testPost: (payload) => dispatch(requestPost(payload)),
+        test: ()=> dispatch({type: `${namespace}/test`}),
+        testPost: (payload)=> dispatch({type: `${namespace}/testPost`, payload}),
     }
 }
 

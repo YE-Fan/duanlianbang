@@ -1,48 +1,34 @@
-import {removeActionNameSpace} from '@/utils/withNameSpace'
 import {testPost} from '../services/qiutu'
 
-export const namespace = 'qiutu'
-
-const initState = {
-  data: 'init'
-}
-
-const reducerHandler = (state = initState, action) =>{
-  switch(action.type){
-    case 'TEST':
+export default {
+  namespace: 'qiutu',
+  state: {
+    data: 'init'
+  },
+  reducers: {
+    test(state,{payload}){
       return {
         ...state,
         data: 'test'
       }
-    case 'TEST_POST':
+    },
+   
+    testPostSuccess(state,{payload}){
       return {
         ...state,
-        data: 'testpost'
+        data: payload
       }
-    case 'TEST_POST_SUCCESS':
-      return {
-        ...state,
-        data: action.payload
-      }
-    default:
-      return state
-      
-  }
-}
-export const reducer = removeActionNameSpace(namespace,reducerHandler);
+    }
+
+  },
+  effects: {
+    * testPost({payload},{call,put}){
+      const {data} = yield call(testPost,payload)
+      yield put({type:'testPostSuccess', payload:data})
+    },
+  },
+} 
 
 
-const namespaceActionCreator = (action) => {
-  return {
-    ...action,
-    type: `${namespace}${action.type}`,
-  }
-}
-// action creator 作为effect
-export const requestPost = payload => (dispatch, getState) => {
-  dispatch(namespaceActionCreator({type:'TEST_POST'}));
 
-  return testPost(payload)
-    .then(({data}) => dispatch(namespaceActionCreator({type:'TEST_POST_SUCCESS', payload:data})))
-  }
 

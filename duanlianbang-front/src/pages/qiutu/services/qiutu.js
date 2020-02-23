@@ -1,7 +1,7 @@
-import {request} from 'remax/wechat'
-export const testPost = payload =>
+import {request} from '@/utils/request.js'
+export const testPost =  payload =>
   request({
-    url: 'https://localhost:7575/testPost',
+    url: '/testPost',
     method: 'POST',
     data: payload
  })

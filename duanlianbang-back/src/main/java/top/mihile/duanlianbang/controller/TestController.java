@@ -20,6 +20,6 @@ public class TestController {
     @PostMapping("/testPost")
     public String testPost(@RequestBody String data){
         System.out.println(data);
-        return "data";
+        return data+"/asdf";
     }
 }
